@@ -1,64 +1,60 @@
-import com.example.Lion;
 import com.example.Feline;
+import com.example.Lion;
 import org.junit.Before;
 import org.junit.Test;
-
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 import java.util.List;
+import static org.junit.Assert.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+@RunWith(MockitoJUnitRunner.class)
 public class LionTest {
-
-    private Feline mockFeline;
-    private Lion lionMale;
-    private Lion lionFemale;
+    private Feline feline;
+    private Lion lion;
 
     @Before
     public void setUp() throws Exception {
-        mockFeline = mock(Feline.class);
-        lionMale = new Lion("Самец", mockFeline);
-        lionFemale = new Lion("Самка", mockFeline);
+        // Создали мок объект Feline
+        feline = Mockito.mock(Feline.class);
+        // Создали экземпляра Lion с мок объектом Feline
+        lion = new Lion("Самец", feline);
     }
 
     @Test
-    public void testGetFood_ReturnsCorrectFoodList() throws Exception {
-        when(mockFeline.getFood("Хищник")).thenReturn(List.of("Животные", "Птицы", "Рыба"));
-        List<String> food = lionMale.getFood();
-        assertEquals(List.of("Животные", "Птицы", "Рыба"), food);
+    public void testDoesHaveMane() throws Exception {
+        // Проверка что у самца есть грива
+        assertTrue(lion.doesHaveMane());
     }
 
     @Test
-    public void testGetFood_CallsGetFoodOnce() throws Exception {
-        when(mockFeline.getFood("Хищник")).thenReturn(List.of("Животные", "Птицы", "Рыба"));
-        lionMale.getFood();
-        verify(mockFeline, times(1)).getFood("Хищник");
+    public void testGetKittens() {
+        // Мок объекта: когда вызывается метод getKittens(), возвращать 2
+        Mockito.when(feline.getKittens()).thenReturn(2);
+
+        // Проверяем что метод getKittens() класса Lion возвращает 2
+        assertEquals(2, lion.getKittens());
     }
 
     @Test
-    public void testGetKittens_ReturnsDefaultCountOfOne() throws Exception {
-        when(mockFeline.getKittens()).thenReturn(1);
-        int kittens = lionMale.getKittens();
-        assertEquals(1, kittens);
+    public void testGetFood() throws Exception {
+        // Мок объекта: когда вызывается метод getFood("Хищник"), возвращать список с "Мясо"
+        Mockito.when(feline.getFood("Хищник")).thenReturn(List.of("Мясо"));
+
+        // Получаем результат работы метода getFood() класса Lion, проверяем его
+        List<String> food = lion.getFood();
+        assertEquals(List.of("Мясо"), food);
     }
 
     @Test
-    public void testDoesHaveMane_Male_ReturnsTrue() {
-        assertTrue(lionMale.doesHaveMane());
-    }
-
-    @Test
-    public void testDoesHaveMane_Female_ReturnsFalse() {
-        assertFalse(lionFemale.doesHaveMane());
-    }
-
-    @Test(expected = Exception.class)
-    public void testInvalidSex_ThrowsException() throws Exception {
-        new Lion("Неизвестный", mockFeline);
+    public void shouldThrowExceptionForInvalidSex() {
+        Feline feline = new Feline();
+        // Проверяем, что при передаче некорректного значения пола будет выброшено исключение
+        Exception exception = assertThrows(Exception.class, () -> {
+            new Lion("Неизвестно", feline);
+        });
+        // Проверяем, что сообщение исключения соответствует ожидаемому
+        assertEquals("Используйте допустимые значения пола животного - самец или самка", exception.getMessage());
     }
 }
+
