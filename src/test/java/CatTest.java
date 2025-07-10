@@ -18,7 +18,7 @@ public class CatTest {
 
     @Before
     public void setUp() {
-        mockFeline = mock(Feline.class); // теперь используем Feline, а не Predator
+        mockFeline = mock(Feline.class);
         cat = new Cat(mockFeline);
     }
 

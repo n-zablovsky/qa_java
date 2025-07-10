@@ -3,19 +3,19 @@ import java.util.List;
 
 public class Alex extends Lion {
     public Alex(Feline feline) throws Exception {
-        super("Самец", feline); // Передаем "Самец" в конструктор родительского класса Lion
+        super("Самец", feline);
     }
 
     public List<String> getFriends() {
-        return List.of("Марти", "Глория", "Мелман"); // Возвращаем список друзей Алекса
+        return List.of("Марти", "Глория", "Мелман");
     }
 
     public String getPlaceOfLiving() {
-        return "Нью-Йоркский зоопарк"; // Возвращаем место жительства Алекса
+        return "Нью-Йоркский зоопарк";
     }
 
     @Override
     public int getKittens() {
-        return 0; // Переопределяем метод, так как у Алекса нет львят
+        return 0;
     }
 }

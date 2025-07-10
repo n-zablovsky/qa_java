@@ -13,33 +13,33 @@ public class AlexTest {
 
     @Before
     public void setUp() throws Exception {
-        feline = Mockito.mock(Feline.class); // Создали мок объекта Feline
-        alex = new Alex(feline); // Создали экземпляр Alex с мок объектом Feline
+        feline = Mockito.mock(Feline.class);
+        alex = new Alex(feline);
     }
 
     @Test
     public void testGetFriends() {
-        // Проверяем что метод getFriends() возвращает список друзей
+
         List<String> friends = alex.getFriends();
         assertEquals(List.of("Марти", "Глория", "Мелман"), friends);
     }
 
     @Test
     public void testGetPlaceOfLiving() {
-        // Проверяем что метод getPlaceOfLiving() возвращает место жительства
+
         String placeOfLiving = alex.getPlaceOfLiving();
         assertEquals("Нью-Йоркский зоопарк", placeOfLiving);
     }
 
     @Test
     public void testGetKittens() {
-        // Проверяем что метод getKittens() возвращает 0
+
         assertEquals(0, alex.getKittens());
     }
 
     @Test
     public void testDoesHaveMane() {
-        // Проверяем что у Алекса есть грива
+
         assertTrue(alex.doesHaveMane());
     }
 }
