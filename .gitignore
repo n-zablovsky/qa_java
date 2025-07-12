@@ -1,3 +1,11 @@
+# Игнорировать папки:
+classes/
+generated-sources/
+generated-test-sources/
+maven-status/
+surefire-reports/
+.idea/
+target/
 # Compiled class file
 *.class
 
